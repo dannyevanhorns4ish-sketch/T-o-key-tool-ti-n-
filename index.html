@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GEN KEY // THIÊN TRẦN</title><style>*{box-sizing:border-box}body{background:#020610;color:#cfcfcf;font-family:monospace;padding:20px;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}.box{background:rgba(5,10,25,.95);border:1px solid #00e5ff;padding:30px;max-width:420px;width:100%;box-shadow:0 0 40px #00e5ff60;text-align:center}.t1{color:#00e5ff;font-size:20px;font-weight:bold;letter-spacing:4px;margin-bottom:20px;text-shadow:0 0 10px #00e5ff}h3{color:#557;font-size:12px;font-weight:normal;margin-bottom:10px;margin-top:20px;text-transform:uppercase}button{width:100%;padding:12px;background:#00e5ff;color:#000;border:1px solid #00e5ff;font-size:13px;font-weight:bold;cursor:pointer;margin-bottom:10px;text-transform:uppercase}button:hover{background:#33ebff}button.normal{background:#0f0;border-color:#0f0;color:#000}button.normal:hover{background:#5f5}#keyOut{width:100%;padding:12px;background:#000;border:1px solid #223;color:#0f0;font-size:13px;text-align:center;margin-top:20px;outline:none;font-weight:bold}#btnCopy{background:#fa3;border-color:#fa3;color:#000;margin-top:10px;display:none}</style></head><body><div class="box"><div class="t1">GEN KEY</div><h3>// KEY VIP //</h3><button onclick="gen(1,'vip')">1 ngày (VIP)</button><button onclick="gen(7,'vip')">7 ngày (VIP)</button><button onclick="gen(30,'vip')">30 ngày (VIP)</button><button onclick="gen(0,'vip')">Vĩnh viễn (VIP)</button><h3 style="margin-top:30px">// KEY THƯỜNG //</h3><button class="normal" onclick="gen(1,'normal')">1 phút (Thường)</button><button class="normal" onclick="gen(10,'normal')">10 phút (Thường)</button><button class="normal" onclick="gen(60,'normal')">1 giờ (Thường)</button><input type="text" id="keyOut" placeholder="Key sinh ra..." readonly onclick="this.select()"><button id="btnCopy" onclick="copyKey()">📋 SAO CHÉP KEY</button></div><script>
+var SECRET="THIENTRAN_SECRET_2024_VEX";
+function h32(s){var h=0;for(var i=0;i<s.length;i++){h=Math.imul(31,h)+s.charCodeAt(i)|0;}var hex=(h>>>0).toString(16);while(hex.length<8)hex="0"+hex;return hex}
+function gen(val,type){
+    var dHex=val.toString(16).toUpperCase();
+    if(dHex.length<2)dHex="0"+dHex;
+    var rnd="";var chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for(var i=0;i<16;i++)rnd+=chars.charAt(Math.floor(Math.random()*chars.length));
+    var sig=h32(dHex+rnd+SECRET);
+    var prefix=type==="vip"?"TT-":"NT-";
+    var key=prefix+dHex+"-"+rnd+"-"+sig;
+    document.getElementById("keyOut").value=key;
+    document.getElementById("btnCopy").style.display="block";
+}
+function copyKey(){
+    var c=document.getElementById("keyOut");
+    c.select();c.setSelectionRange(0,99999);
+    try{
+        navigator.clipboard.writeText(c.value).then(()=>{
+            document.getElementById("btnCopy").innerText="✔ ĐÃ COPY!";
+            setTimeout(()=>document.getElementById("btnCopy").innerText="📋 SAO CHÉP KEY",2000);
+        });
+    }catch(e){
+        document.execCommand("copy");
+        document.getElementById("btnCopy").innerText="✔ ĐÃ COPY!";
+        setTimeout(()=>document.getElementById("btnCopy").innerText="📋 SAO CHÉP KEY",2000);
+    }
+}
+</script></body></html>
